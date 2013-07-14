@@ -1,0 +1,4 @@
+foursquareAPI
+=============
+
+foursquare API connector
