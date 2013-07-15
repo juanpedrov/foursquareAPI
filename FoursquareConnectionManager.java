@@ -87,11 +87,12 @@ public class FoursquareConnectionManager {
 		WSRequest request;
 		
 		request = WS.url(HOST + VERSION + VENUES_SEARCH);		
-		if (ll.length() != 0)			
+		if (ll.length() > 0)			
 			request.setParameter("ll", ll);
-		if (city.length() != 0)
+		if (city.length() > 0)
 			request.setParameter("near", city);
-		request.setParameter("categoryId", categoryId);
+		if (categoryId.length() > 0)
+			request.setParameter("categoryId", categoryId);
 		request.setParameter("client_id", this.clientId);
 		request.setParameter("client_secret", this.clientSecret);
 		request.setParameter("v", new SimpleDateFormat("yyyyMMdd").format(new Date()));
