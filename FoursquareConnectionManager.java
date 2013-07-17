@@ -27,6 +27,10 @@ public class FoursquareConnectionManager {
 	private String clientId;
 	private String clientSecret;
 	
+	public enum Intent {
+		checkin, browse, global, match
+	}
+	
 	public FoursquareConnectionManager(String clientId, String clientSecret) {
 		super();
 		this.clientId = clientId;
@@ -77,12 +81,12 @@ public class FoursquareConnectionManager {
 		return categoriesResult;
 	}	
 	
-	public List<VenueResponse> getVenues(String categoryId, String ll, String city) {
+	public List<VenueResponse> getVenues(String categoryId, String ll, String city, Intent intent, double radius) {
 		
-		return getVenuesRequest(categoryId, ll, city);
+		return getVenuesRequest(categoryId, ll, city, intent, radius);
 	}
 	
-	private List<VenueResponse> getVenuesRequest(String categoryId, String ll, String city) {
+	private List<VenueResponse> getVenuesRequest(String categoryId, String ll, String city, Intent intent, double radius) {
 		HttpResponse res;
 		WSRequest request;
 		
@@ -93,6 +97,10 @@ public class FoursquareConnectionManager {
 			request.setParameter("near", city);
 		if (categoryId.length() > 0)
 			request.setParameter("categoryId", categoryId);
+		if (intent != null)
+			request.setParameter("intent", intent.toString());
+		if (radius > 0)
+			request.setParameter("radius", radius);
 		request.setParameter("client_id", this.clientId);
 		request.setParameter("client_secret", this.clientSecret);
 		request.setParameter("v", new SimpleDateFormat("yyyyMMdd").format(new Date()));
