@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import models.Venue;
 import play.libs.WS;
 import play.libs.WS.HttpResponse;
 import play.libs.WS.WSRequest;
@@ -89,6 +90,7 @@ public class FoursquareConnectionManager {
 	private List<VenueResponse> getVenuesRequest(String categoryId, String ll, String city, Intent intent, double radius) {
 		HttpResponse res;
 		WSRequest request;
+		List<VenueResponse> venues = new ArrayList<VenueResponse>();
 		
 		request = WS.url(HOST + VERSION + VENUES_SEARCH);		
 		if (ll.length() > 0)			
@@ -109,7 +111,10 @@ public class FoursquareConnectionManager {
 		Gson gson = new GsonBuilder().create();
 		FoursquareApiResponse apiResponse = gson.fromJson(res.getString(), FoursquareApiResponse.class);
 		
-		return apiResponse.getResponse().getVenues();
+		if (apiResponse.getResponse().getVenues() == null)
+			return venues;
+		
+		return venues = apiResponse.getResponse().getVenues();
 	}
 
 	private List<CategoryResponse> getCategoriesRequest() {
