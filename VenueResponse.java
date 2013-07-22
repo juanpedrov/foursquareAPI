@@ -1,5 +1,7 @@
 package foursquare;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class VenueResponse {
@@ -93,4 +95,38 @@ public class VenueResponse {
 	public String getReferralId() {
 		return referralId;
 	}
+	
+	public CategoryResponse getPrimaryCategory() {		
+		
+        for (Iterator<CategoryResponse> iterator = categories.iterator(); iterator.hasNext();) {
+        	CategoryResponse category = iterator.next();
+        	        	
+        	if (category.getPrimary())
+        		return category;
+        	
+        	List<CategoryResponse> subCategories = category.getCategories();
+        	if ( subCategories.size() > 0) {
+        		
+                for (Iterator<CategoryResponse> subIterator = subCategories.iterator(); subIterator.hasNext();) {
+                	CategoryResponse subCategory = subIterator.next();
+                	        	
+                	if (subCategory.getPrimary())
+                		return category;
+            
+                	List<CategoryResponse> subSubCategories = subCategory.getCategories();
+                	if (subSubCategories.size() > 0) {
+                		
+                        for (Iterator<CategoryResponse> subSubIterator = subSubCategories.iterator(); subSubIterator.hasNext();) {
+                        	CategoryResponse subSubCategory = subSubIterator.next();
+                        	        	
+                        	if (subSubCategory.getPrimary())
+                        		return category;
+                        }                 		
+                	}
+                }          		
+        	}
+        }  		
+        
+        return new CategoryResponse();
+	}	
 }

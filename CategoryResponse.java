@@ -24,6 +24,10 @@ public class CategoryResponse {
 		this.name = name;
 	}
 	
+	public CategoryResponse() {
+		super();
+	}
+
 	public String getId() {
 		return id;
 	}
