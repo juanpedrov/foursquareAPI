@@ -28,7 +28,7 @@ public class VenueResponse {
 	
 	private SpecialsResponse specials;
 	
-	private PhotosResponse photos;
+//	private PhotosResponse photos;
 	
 	private HereNowResponse hereNow;
 	
@@ -100,9 +100,9 @@ public class VenueResponse {
 		return referralId;
 	}
 		
-	public PhotosResponse getPhotos() {
-		return photos;
-	}
+//	public PhotosResponse getPhotos() {
+//		return photos;
+//	}
 
 	public PageResponse getPage() {
 		return page;

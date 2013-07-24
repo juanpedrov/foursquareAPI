@@ -97,17 +97,21 @@ public class FoursquareConnectionManager {
 	}
 		
 	private VenueResponse getVenueDetailRequest(String id) {
+//		return null;
 		HttpResponse res;
 		WSRequest request;
-		VenueResponse venue = new VenueResponse();
+		VenueResponse venue = null;
 		
 		request = WS.url(HOST + VERSION + VENUES + id);
 		request.setParameter("client_id", this.clientId);
 		request.setParameter("client_secret", this.clientSecret);
+		request.setParameter("v", new SimpleDateFormat("yyyyMMdd").format(new Date()));
 		
 		res = request.get();
+		
 		Gson gson = new GsonBuilder().create();
-		FoursquareApiResponse apiResponse = gson.fromJson(res.getString(), FoursquareApiResponse.class);		
+		String respuesta = res.getString();
+		FoursquareApiResponse apiResponse = gson.fromJson(respuesta, FoursquareApiResponse.class);		
 		
 		if (apiResponse.getResponse().getVenue() == null)
 			return venue;
