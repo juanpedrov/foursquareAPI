@@ -28,6 +28,8 @@ public class VenueResponse {
 	
 	private SpecialsResponse specials;
 	
+	private PhotosResponse photos;
+	
 	private HereNowResponse hereNow;
 	
 	private VenuePageResponse venuePage;
@@ -36,6 +38,8 @@ public class VenueResponse {
 	
 	private String referralId;
 
+	private PageResponse page; 
+	
 	public String getId() {
 		return id;
 	}
@@ -95,7 +99,15 @@ public class VenueResponse {
 	public String getReferralId() {
 		return referralId;
 	}
-	
+		
+	public PhotosResponse getPhotos() {
+		return photos;
+	}
+
+	public PageResponse getPage() {
+		return page;
+	}
+
 	public CategoryResponse getPrimaryCategory() {		
 		
         for (Iterator<CategoryResponse> iterator = categories.iterator(); iterator.hasNext();) {
@@ -128,5 +140,5 @@ public class VenueResponse {
         }  		
         
         return new CategoryResponse();
-	}	
+	}
 }

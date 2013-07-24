@@ -11,6 +11,8 @@ public class ObjectResponse {
 	private List<CategoryResponse> categories;
 	
 	private List<VenueResponse> venues;
+	
+	private VenueResponse venue;
 
 	public List<CategoryResponse> getCategories() {
 		return categories;
@@ -26,5 +28,9 @@ public class ObjectResponse {
 
 	public void setVenues(List<VenueResponse> venues) {
 		this.venues = venues;
+	}
+
+	public VenueResponse getVenue() {
+		return venue;
 	}
 }

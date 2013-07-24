@@ -24,9 +24,12 @@ public class FoursquareConnectionManager {
 	private static final String VERSION			   = "v2";
 	private static final String VENUES_CATEGORIES  = "/venues/categories/";
 	private static final String VENUES_SEARCH 	   = "/venues/search/";
+	private static final String VENUES		 	   = "/venues/";
 	
 	private String clientId;
 	private String clientSecret;
+	
+	private VenueResponse venue;
 	
 	public enum Intent {
 		checkin, browse, global, match
@@ -36,6 +39,12 @@ public class FoursquareConnectionManager {
 		super();
 		this.clientId = clientId;
 		this.clientSecret = clientSecret;
+	}
+
+	public VenueResponse getVenueDetail(String id) {
+		
+		this.venue = getVenueDetailRequest(id);
+		return this.venue;
 	}
 
 	public List<CategoryResponse> getCategories() {			
@@ -85,6 +94,25 @@ public class FoursquareConnectionManager {
 	public List<VenueResponse> getVenues(String categoryId, String ll, String city, Intent intent, double radius) {
 		
 		return getVenuesRequest(categoryId, ll, city, intent, radius);
+	}
+		
+	private VenueResponse getVenueDetailRequest(String id) {
+		HttpResponse res;
+		WSRequest request;
+		VenueResponse venue = new VenueResponse();
+		
+		request = WS.url(HOST + VERSION + VENUES + id);
+		request.setParameter("client_id", this.clientId);
+		request.setParameter("client_secret", this.clientSecret);
+		
+		res = request.get();
+		Gson gson = new GsonBuilder().create();
+		FoursquareApiResponse apiResponse = gson.fromJson(res.getString(), FoursquareApiResponse.class);		
+		
+		if (apiResponse.getResponse().getVenue() == null)
+			return venue;
+		
+		return apiResponse.getResponse().getVenue();
 	}
 	
 	private List<VenueResponse> getVenuesRequest(String categoryId, String ll, String city, Intent intent, double radius) {
