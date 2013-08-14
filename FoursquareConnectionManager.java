@@ -91,9 +91,9 @@ public class FoursquareConnectionManager {
 		return categoriesResult;
 	}	
 	
-	public List<VenueResponse> getVenues(String categoryId, String ll, String city, Intent intent, double radius) {
+	public List<VenueResponse> getVenues(String categoryId, String ll, String city, Intent intent, double radius, String query) {
 		
-		return getVenuesRequest(categoryId, ll, city, intent, radius);
+		return getVenuesRequest(categoryId, ll, city, intent, radius, query);
 	}
 		
 	private VenueResponse getVenueDetailRequest(String id) {
@@ -119,22 +119,24 @@ public class FoursquareConnectionManager {
 		return apiResponse.getResponse().getVenue();
 	}
 	
-	private List<VenueResponse> getVenuesRequest(String categoryId, String ll, String city, Intent intent, double radius) {
+	private List<VenueResponse> getVenuesRequest(String categoryId, String ll, String city, Intent intent, double radius, String query) {
 		HttpResponse res;
 		WSRequest request;
 		List<VenueResponse> venues = new ArrayList<VenueResponse>();
 		
 		request = WS.url(HOST + VERSION + VENUES_SEARCH);		
-		if (ll.length() > 0)			
+		if (ll != null && ll.length() > 0)			
 			request.setParameter("ll", ll);
-		if (city.length() > 0)
+		if (city != null && city.length() > 0)
 			request.setParameter("near", city);
-		if (categoryId.length() > 0)
+		if (categoryId != null && categoryId.length() > 0)
 			request.setParameter("categoryId", categoryId);
 		if (intent != null)
 			request.setParameter("intent", intent.toString());
 		if (radius > 0)
 			request.setParameter("radius", radius);
+		if (query != null && query.length() > 0)
+			request.setParameter("query", categoryId);		
 		request.setParameter("client_id", this.clientId);
 		request.setParameter("client_secret", this.clientSecret);
 		request.setParameter("v", new SimpleDateFormat("yyyyMMdd").format(new Date()));
