@@ -136,7 +136,7 @@ public class FoursquareConnectionManager {
 		if (radius > 0)
 			request.setParameter("radius", radius);
 		if (query != null && query.length() > 0)
-			request.setParameter("query", categoryId);		
+			request.setParameter("query", query);		
 		request.setParameter("client_id", this.clientId);
 		request.setParameter("client_secret", this.clientSecret);
 		request.setParameter("v", new SimpleDateFormat("yyyyMMdd").format(new Date()));
